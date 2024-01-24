@@ -1,13 +1,14 @@
 {
   "name": "medusa-file-ali",
+  "description": "Aliyun OSS file connector for Medusa",
   "version": "0.1.0",
-  "types": "./dist/types/index.d.ts",
-  "main": "./dist/lib/index.js",
-  "module": "./dist/es/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "prepare": "modern build && husky install",
     "dev": "modern dev",
-    "build": "modern build",
+    "build": "rimraf dist && tsc",
     "build:watch": "modern build -w",
     "reset": "rimraf ./**/node_modules",
     "lint": "modern lint",
