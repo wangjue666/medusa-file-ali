@@ -29,21 +29,25 @@
     "node_modules/",
     "dist/"
   ],
-  "dependencies": {},
-  "peerDependencies": {},
   "devDependencies": {
-    "@modern-js/module-tools": "2.46.1",
+    "@medusajs/medusa": "^1.20.0",
+    "@medusajs/types": "^1.11.10",
     "@modern-js/eslint-config": "2.46.1",
-    "typescript": "~5.0.4",
+    "@modern-js/module-tools": "2.46.1",
+    "@types/ali-oss": "^6.16.11",
     "@types/node": "~16.11.7",
-    "rimraf": "~3.0.2",
+    "husky": "~8.0.1",
     "lint-staged": "~13.1.0",
     "prettier": "~2.8.1",
-    "husky": "~8.0.1"
+    "rimraf": "~3.0.2",
+    "typescript": "~5.0.4"
   },
   "sideEffects": [],
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "ali-oss": "^6.20.0"
   }
 }
