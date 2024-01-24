@@ -1,7 +1,7 @@
 {
   "name": "medusa-file-ali",
   "description": "Aliyun OSS file connector for Medusa",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "dist/index.js",
   "files": [
     "dist"
@@ -56,5 +56,9 @@
   },
   "dependencies": {
     "ali-oss": "^6.20.0"
-  }
+  },
+  "keywords": [
+    "medusa-plugin",
+    "medusa-plugin-file"
+  ]
 }
