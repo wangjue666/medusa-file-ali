@@ -76,10 +76,12 @@ class AliSevice extends AbstractFileService implements IFileService {
         headers: {
           'x-oss-storage-class': 'Standard',
           'x-oss-object-acl': acl,
+          // must add this header, otherwise the file will be downloaded instead of displayed
+          'Content-Type': 'image/jpg',
         },
       });
       return {
-        url: result.url.replace('http', 'https'),
+        url: result.url,
         key: fileKey,
       };
     } catch (e) {
