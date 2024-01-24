@@ -18,6 +18,7 @@ export type AliOssOptions = {
   bucket: string;
   secure?: boolean;
   prefix?: string;
+  storageType?: 'flat' | 'byDate';
 };
 
 class AliSevice extends AbstractFileService implements IFileService {
@@ -34,6 +35,7 @@ class AliSevice extends AbstractFileService implements IFileService {
     options: AliOssOptions & Record<string, unknown>,
   ) {
     super({}, options);
+    options.storageType = options.storageType || 'flat';
     this.aliOssOptions = options;
     this.logger_ = logger;
     this.client_ = this.getClient();
@@ -68,9 +70,10 @@ class AliSevice extends AbstractFileService implements IFileService {
   ): Promise<FileServiceUploadResult> {
     const parsedFilename = parse(fileData.originalname);
 
-    const fileKey = `${this.prefix_}${parsedFilename.name}-${Date.now()}${
-      parsedFilename.ext
-    }`;
+    const fileKey = this.genFileKey({
+      name: parsedFilename.name,
+      ext: parsedFilename.ext,
+    });
     try {
       const result = await this.client_.put(fileKey, fileData.path, {
         headers: {
@@ -102,7 +105,10 @@ class AliSevice extends AbstractFileService implements IFileService {
     fileData: UploadStreamDescriptorType,
   ): Promise<FileServiceGetUploadStreamResult> {
     const pass = new stream.PassThrough();
-    const fileKey = `${this.prefix_}${fileData.name}.${fileData.ext}`;
+    const fileKey = this.genFileKey({
+      name: fileData.name,
+      ext: fileData.ext || '',
+    });
 
     const result = this.client_.putStream(fileKey, pass);
     const url = this.genAliOsUrl(fileKey);
@@ -129,6 +135,26 @@ class AliSevice extends AbstractFileService implements IFileService {
 
   genAliOsUrl(fileKey: string): string {
     return `https://${this.aliOssOptions.bucket}.${this.aliOssOptions.region}.aliyuncs.com/${fileKey}`;
+  }
+
+  genFileKey({ name, ext }: { ext: string; name: string }) {
+    const extraDir =
+      this.aliOssOptions.storageType === 'byDate'
+        ? this.getFileDirByDate()
+        : '';
+    const fileKey = `${this.prefix_}${extraDir}${name}-${Date.now()}${ext}`;
+
+    return fileKey;
+  }
+
+  getFileDirByDate() {
+    const now = new Date();
+    const year = now.getFullYear().toString();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+
+    const formattedDate = `${year}/${month}/${day}`;
+    return formattedDate;
   }
 }
 
