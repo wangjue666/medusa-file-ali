@@ -2,6 +2,7 @@
   "name": "medusa-file-ali",
   "description": "Aliyun OSS file connector for Medusa",
   "version": "0.1.0",
+  "main": "dist/index.js",
   "files": [
     "dist"
   ],
