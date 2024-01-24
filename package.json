@@ -1,7 +1,7 @@
 {
   "name": "medusa-file-ali",
   "description": "Aliyun OSS file connector for Medusa",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "files": [
     "dist"
@@ -24,7 +24,8 @@
     "gen-release-note": "modern gen-release-note",
     "release": "modern release",
     "new": "modern new",
-    "upgrade": "modern upgrade"
+    "upgrade": "modern upgrade",
+    "prepublishOnly": "npm run build"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
